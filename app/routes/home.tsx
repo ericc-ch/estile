@@ -28,7 +28,7 @@ export async function loader() {
 export async function action() {
   try {
     const { object } = await generateObject({
-      model: ollama("llama3.2:3b-instruct-q4_K_M"),
+      model: ollama("gemma2:2b-instruct-q4_K_M"),
       system: PROMPT_KEYWORD_GEN.SYSTEM_PROMPT,
       prompt: `User request: I want casual outfit`,
       schema: schemaKeywordGen,
@@ -44,6 +44,8 @@ export async function action() {
 }
 
 export default function Home({ loaderData, actionData }: Route.ComponentProps) {
+  console.log(loaderData, actionData)
+
   return (
     <Stack
       gap="xl"
@@ -57,42 +59,49 @@ export default function Home({ loaderData, actionData }: Route.ComponentProps) {
     >
       <Stack gap={0}>
         <Title order={1} ta="center" textWrap="pretty">
-          Unlock Your Best Look, Powered by AI
+          Unlock Your Best Look,
+          <br /> Powered by AI
         </Title>
         <Text ta="center">
           Describe your style needs and let our AI find the perfect outfits.
         </Text>
       </Stack>
 
-      <Box
-        component={Form}
-        method="post"
-        style={{
-          borderRadius: rem(4),
-          border: "1px solid #ccc",
-          padding: rem(8),
+      <Form method="post">
+        <Box
+          style={{
+            borderRadius: rem(4),
+            border: "1px solid #ccc",
+            padding: rem(8),
 
-          display: "flex",
-          flexDirection: "column",
-          gap: rem(4),
-        }}
-      >
-        <Textarea placeholder="Describe your outfit needs (e.g., 'a casual outfit for a summer party,' or 'formal wear for a wedding')..." />
+            display: "flex",
+            flexDirection: "column",
+            gap: rem(4),
+          }}
+        >
+          <Textarea placeholder="Describe your outfit needs (e.g., 'a casual outfit for a summer party,' or 'formal wear for a wedding')..." />
 
-        <Group>
-          <FileButton onChange={console.log}>
-            {(props) => (
-              <ActionIcon {...props} size="lg" variant="light">
-                <PaperclipIcon style={{ width: rem(16), height: rem(16) }} />
-              </ActionIcon>
-            )}
-          </FileButton>
+          <Group>
+            <FileButton onChange={console.log}>
+              {(props) => (
+                <ActionIcon {...props} size="lg" type="button" variant="light">
+                  <PaperclipIcon style={{ width: rem(16), height: rem(16) }} />
+                </ActionIcon>
+              )}
+            </FileButton>
 
-          <ActionIcon size="lg" style={{ marginInlineStart: "auto" }}>
-            <SendIcon style={{ width: rem(16), height: rem(16) }} />
-          </ActionIcon>
-        </Group>
-      </Box>
+            <ActionIcon
+              size="lg"
+              style={{ marginInlineStart: "auto" }}
+              type="submit"
+            >
+              <SendIcon style={{ width: rem(16), height: rem(16) }} />
+            </ActionIcon>
+          </Group>
+        </Box>
+      </Form>
+
+      {JSON.stringify(actionData?.result)}
     </Stack>
   )
 }
