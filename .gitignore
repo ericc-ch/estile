@@ -5,8 +5,8 @@
 /.react-router/
 /build/
 
-# env files
-.env
+# local env files
+*.local
 
 # ESLint
 .eslintcache
