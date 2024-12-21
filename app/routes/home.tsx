@@ -1,5 +1,16 @@
-import { Box, Button, Group, Radio, Text, Textarea, Title } from "@mantine/core"
+import {
+  ActionIcon,
+  Box,
+  FileButton,
+  Group,
+  rem,
+  Stack,
+  Text,
+  Textarea,
+  Title,
+} from "@mantine/core"
 import { generateObject, NoObjectGeneratedError } from "ai"
+import { PaperclipIcon, SendIcon } from "lucide-react"
 import { Form } from "react-router"
 
 import { _ollama, ollama } from "~/services/instances"
@@ -7,54 +18,6 @@ import { PROMPT_KEYWORD_GEN } from "~/services/keywords-gen/prompts"
 import { schemaKeywordGen } from "~/services/keywords-gen/schema"
 
 import type { Route } from "./+types/home"
-
-const skinTones = [
-  {
-    name: "Fair",
-    hex: "#F8EEDD",
-    group: "Light",
-  },
-  {
-    name: "Ivory",
-    hex: "#F0E6D9",
-    group: "Light",
-  },
-  {
-    name: "Porcelain",
-    hex: "#FAF0E6",
-    group: "Light",
-  },
-  {
-    name: "Beige",
-    hex: "#E4C7B7",
-    group: "Medium",
-  },
-  {
-    name: "Olive",
-    hex: "#C9B085",
-    group: "Medium",
-  },
-  {
-    name: "Tan",
-    hex: "#D2B48C",
-    group: "Medium",
-  },
-  {
-    name: "Brown",
-    hex: "#A0785A",
-    group: "Dark",
-  },
-  {
-    name: "Deep Brown",
-    hex: "#604A3F",
-    group: "Dark",
-  },
-  {
-    name: "Ebony",
-    hex: "#332721",
-    group: "Dark",
-  },
-]
 
 export async function loader() {
   const { models } = await _ollama.list()
@@ -81,43 +44,55 @@ export async function action() {
 }
 
 export default function Home({ loaderData, actionData }: Route.ComponentProps) {
-  const { availableModels } = loaderData
-  console.log(actionData?.result)
-
   return (
-    <>
-      {availableModels.map((model) => (
-        <Text key={model.name}>{model.name}</Text>
-      ))}
+    <Stack
+      gap="xl"
+      justify="center"
+      style={{
+        width: "min(100% - 3rem, 600px)",
+        minHeight: "100svh",
 
-      <Title order={1}>What do you want to build?</Title>
-      <Textarea
-        autosize
-        label="Autosize with 4 rows max"
-        maxRows={4}
-        minRows={2}
-        placeholder="Autosize with 4 rows max"
-      />
+        marginInline: "auto",
+      }}
+    >
+      <Stack gap={0}>
+        <Title order={1} ta="center" textWrap="pretty">
+          Unlock Your Best Look, Powered by AI
+        </Title>
+        <Text ta="center">
+          Describe your style needs and let our AI find the perfect outfits.
+        </Text>
+      </Stack>
 
-      <Radio.Group label="Skin Tone">
+      <Box
+        component={Form}
+        method="post"
+        style={{
+          borderRadius: rem(4),
+          border: "1px solid #ccc",
+          padding: rem(8),
+
+          display: "flex",
+          flexDirection: "column",
+          gap: rem(4),
+        }}
+      >
+        <Textarea placeholder="Describe your outfit needs (e.g., 'a casual outfit for a summer party,' or 'formal wear for a wedding')..." />
+
         <Group>
-          {skinTones.map((tone) => (
-            <Radio.Card key={tone.name} value={tone.hex} w="auto">
-              <Group>
-                <Radio.Indicator />
-                <Box
-                  style={{ backgroundColor: tone.hex, width: 20, height: 20 }}
-                />
-                <Text>{tone.name}</Text>
-              </Group>
-            </Radio.Card>
-          ))}
-        </Group>
-      </Radio.Group>
+          <FileButton onChange={console.log}>
+            {(props) => (
+              <ActionIcon {...props} size="lg" variant="light">
+                <PaperclipIcon style={{ width: rem(16), height: rem(16) }} />
+              </ActionIcon>
+            )}
+          </FileButton>
 
-      <Form method="post">
-        <Button type="submit">Submit</Button>
-      </Form>
-    </>
+          <ActionIcon size="lg" style={{ marginInlineStart: "auto" }}>
+            <SendIcon style={{ width: rem(16), height: rem(16) }} />
+          </ActionIcon>
+        </Group>
+      </Box>
+    </Stack>
   )
 }
