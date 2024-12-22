@@ -9,54 +9,12 @@ import {
   Textarea,
   Title,
 } from "@mantine/core"
-import { generateObject, NoObjectGeneratedError } from "ai"
 import { PaperclipIcon, SendIcon } from "lucide-react"
 import { Form } from "react-router"
 
-import { _ollama, ollama } from "~/services/instances"
-import { PROMPT_KEYWORD_GEN } from "~/services/keywords-gen/prompts"
-import { schemaKeywordGen } from "~/services/keywords-gen/schema"
-
-import type { Route } from "./+types/home"
-
-export async function loader() {
-  const { models } = await _ollama.list()
-
-  return { availableModels: models }
-}
-
-export async function action() {
-  try {
-    const { object } = await generateObject({
-      model: ollama("gemma2:2b-instruct-q4_K_M"),
-      system: PROMPT_KEYWORD_GEN.SYSTEM_PROMPT,
-      prompt: `User request: I want casual outfit`,
-      schema: schemaKeywordGen,
-    })
-
-    return { result: object }
-  } catch (error) {
-    if (NoObjectGeneratedError.isInstance(error)) {
-      console.log(error)
-      console.log(error.text)
-    }
-  }
-}
-
-export default function Home({ loaderData, actionData }: Route.ComponentProps) {
-  console.log(loaderData, actionData)
-
+export default function Home() {
   return (
-    <Stack
-      gap="xl"
-      justify="center"
-      style={{
-        width: "min(100% - 3rem, 600px)",
-        minHeight: "100svh",
-
-        marginInline: "auto",
-      }}
-    >
+    <>
       <Stack gap={0}>
         <Title order={1} ta="center" textWrap="pretty">
           Unlock Your Best Look,
@@ -67,7 +25,7 @@ export default function Home({ loaderData, actionData }: Route.ComponentProps) {
         </Text>
       </Stack>
 
-      <Form method="post">
+      <Form action="result">
         <Box
           style={{
             borderRadius: rem(4),
@@ -79,7 +37,10 @@ export default function Home({ loaderData, actionData }: Route.ComponentProps) {
             gap: rem(4),
           }}
         >
-          <Textarea placeholder="Describe your outfit needs (e.g., 'a casual outfit for a summer party,' or 'formal wear for a wedding')..." />
+          <Textarea
+            name="prompt"
+            placeholder="Describe your outfit needs (e.g., 'a casual outfit for a summer party,' or 'formal wear for a wedding')..."
+          />
 
           <Group>
             <FileButton onChange={console.log}>
@@ -100,8 +61,6 @@ export default function Home({ loaderData, actionData }: Route.ComponentProps) {
           </Group>
         </Box>
       </Form>
-
-      {JSON.stringify(actionData?.result)}
-    </Stack>
+    </>
   )
 }
