@@ -59,14 +59,16 @@ export default function Result() {
   const [searchParams] = useSearchParams()
   const fetcher = useFetcher()
 
+  const initialSubmit = (prompt: string) => {
+    return fetcher.submit({ prompt }, { method: "post" })
+  }
+
   useEffect(() => {
     const prompt = searchParams.get("prompt")
 
     if (!prompt) return
 
-    fetcher.submit({ prompt }, { method: "post" })
-
-    console.log(searchParams)
+    initialSubmit(prompt).catch(console.error)
   }, [])
 
   return (
