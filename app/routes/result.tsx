@@ -35,6 +35,29 @@ const mockGeneratedObject = {
   ],
 }
 
+export function loader({ request }: Route.LoaderArgs) {
+  const url = new URL(request.url)
+  const prompt = url.searchParams.get("prompt")
+
+  if (!prompt) throw new Error("Prompt not found")
+
+  try {
+    const response = generateObject({
+      model: ollama(OLLAMA_MODEL),
+      system: PROMPT_KEYWORD_GEN.SYSTEM_PROMPT,
+      prompt: `User request: ${prompt}`,
+      schema: schemaKeywordGen,
+    })
+
+    return { response }
+  } catch (error) {
+    if (NoObjectGeneratedError.isInstance(error)) {
+      console.log(error)
+      console.log(error.text)
+    }
+  }
+}
+
 export async function action({ request }: Route.ActionArgs) {
   console.log(Object.fromEntries(await request.formData()))
 
