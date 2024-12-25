@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const schemaKeywordGen = z
+export const schemaGetRecommendations = z
   .object({
     outfits: z.array(
       z.object({
@@ -8,6 +8,11 @@ export const schemaKeywordGen = z
         description: z
           .string()
           .describe("Description of the clothing article."),
+        reason: z
+          .string()
+          .describe(
+            "Reason why the clothing article is suitable for the user.",
+          ),
         keywords: z
           .string()
           .describe(
