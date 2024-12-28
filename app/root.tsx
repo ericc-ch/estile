@@ -13,27 +13,8 @@ import {
 
 import type { Route } from "./+types/root"
 
-export function loader() {
-  return {
-    ENV: {
-      BACKEND_URL: process.env.BACKEND_URL,
-    },
-  }
-}
-
-export default function App({ loaderData }: Route.ComponentProps) {
-  const { ENV } = loaderData
-
-  return (
-    <>
-      <Outlet />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.ENV = ${JSON.stringify(ENV)};`,
-        }}
-      ></script>
-    </>
-  )
+export default function App() {
+  return <Outlet />
 }
 
 const queryClient = new QueryClient()
