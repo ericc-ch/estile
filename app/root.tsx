@@ -1,6 +1,7 @@
 import "@mantine/core/styles.layer.css"
 import "@mantine/dropzone/styles.layer.css"
 import { ColorSchemeScript, MantineProvider } from "@mantine/core"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import {
   isRouteErrorResponse,
   Links,
@@ -12,8 +13,51 @@ import {
 
 import type { Route } from "./+types/root"
 
-export default function App() {
-  return <Outlet />
+export function loader() {
+  return {
+    ENV: {
+      BACKEND_URL: process.env.BACKEND_URL,
+    },
+  }
+}
+
+export default function App({ loaderData }: Route.ComponentProps) {
+  const { ENV } = loaderData
+
+  return (
+    <>
+      <Outlet />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.ENV = ${JSON.stringify(ENV)};`,
+        }}
+      ></script>
+    </>
+  )
+}
+
+const queryClient = new QueryClient()
+
+export function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <html suppressHydrationWarning lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <Meta />
+
+        <Links />
+        <ColorSchemeScript />
+      </head>
+      <body>
+        <QueryClientProvider client={queryClient}>
+          <MantineProvider>{children}</MantineProvider>
+        </QueryClientProvider>
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  )
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -42,25 +86,5 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
         </pre>
       )}
     </main>
-  )
-}
-
-export function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <html suppressHydrationWarning lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <Meta />
-
-        <Links />
-        <ColorSchemeScript />
-      </head>
-      <body>
-        <MantineProvider>{children}</MantineProvider>
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
   )
 }

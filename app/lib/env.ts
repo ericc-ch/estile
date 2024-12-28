@@ -1,4 +1,2 @@
-export const OLLAMA_HOST = process.env.OLLAMA_HOST ?? "http://localhost:11434"
-export const OLLAMA_BASEURL = `${OLLAMA_HOST}/api`
-export const OLLAMA_MODEL =
-  process.env.OLLAMA_MODEL ?? "gemma2:2b-instruct-q6_K"
+// Not sure how to expose env variable in SPA mode
+export const BACKEND_URL = "http://localhost:3000"
