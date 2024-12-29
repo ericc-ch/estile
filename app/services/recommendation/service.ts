@@ -42,9 +42,11 @@ function getRecommendations(options: GetRecommendationOptions) {
   })
 }
 
-export const useGetRecommendations = useMutation({
-  mutationFn: getRecommendations,
-})
+export const useGetRecommendations = () => {
+  return useMutation({
+    mutationFn: getRecommendations,
+  })
+}
 
 // Keeping this for future reference
 // export const RECOMMENDATION_QUERIES = {

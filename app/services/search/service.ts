@@ -26,9 +26,11 @@ function searchProduct(options: SearchOptions) {
   })
 }
 
-export const useSearchProduct = useMutation({
-  mutationFn: searchProduct,
-})
+export const useSearchProduct = () => {
+  return useMutation({
+    mutationFn: searchProduct,
+  })
+}
 
 // Keeping this for future reference
 // export const SEARCH_QUERIES = {
