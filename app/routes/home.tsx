@@ -24,7 +24,7 @@ export default function Home() {
           Describe your style needs and let our AI find the perfect outfits.
         </Text>
       </Stack>
-      <form method="post">
+      <form>
         <Box
           style={{
             borderRadius: rem(4),

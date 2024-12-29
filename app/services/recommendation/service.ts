@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { z } from "zod"
 
 import { api, type ResponseBase } from "../api"
@@ -42,11 +42,16 @@ function getRecommendations(options: GetRecommendationOptions) {
   })
 }
 
-export const RECOMMENDATION_QUERIES = {
-  all: () => queryOptions({ queryKey: ["recommendations"] }),
-  getRecommendations: (options: GetRecommendationOptions) =>
-    queryOptions({
-      queryKey: [RECOMMENDATION_QUERIES.all().queryKey, options] as const,
-      queryFn: ({ queryKey: [, options] }) => getRecommendations(options),
-    }),
-}
+export const useGetRecommendations = useMutation({
+  mutationFn: getRecommendations,
+})
+
+// Keeping this for future reference
+// export const RECOMMENDATION_QUERIES = {
+//   all: () => queryOptions({ queryKey: ["recommendations"] }),
+//   getRecommendations: (options: GetRecommendationOptions) =>
+//     queryOptions({
+//       queryKey: [RECOMMENDATION_QUERIES.all().queryKey, options] as const,
+//       queryFn: ({ queryKey: [, options] }) => getRecommendations(options),
+//     }),
+// }

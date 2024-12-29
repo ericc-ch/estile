@@ -1,4 +1,4 @@
-import { queryOptions } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 
 import { api, type ResponseBase } from "../api"
 
@@ -26,11 +26,16 @@ function searchProduct(options: SearchOptions) {
   })
 }
 
-export const SEARCH_QUERIES = {
-  all: () => queryOptions({ queryKey: ["search"] }),
-  search: (options: SearchOptions) =>
-    queryOptions({
-      queryKey: [SEARCH_QUERIES.all().queryKey, options] as const,
-      queryFn: ({ queryKey: [, options] }) => searchProduct(options),
-    }),
-}
+export const useSearchProduct = useMutation({
+  mutationFn: searchProduct,
+})
+
+// Keeping this for future reference
+// export const SEARCH_QUERIES = {
+//   all: () => queryOptions({ queryKey: ["search"] }),
+//   search: (options: SearchOptions) =>
+//     queryOptions({
+//       queryKey: [SEARCH_QUERIES.all().queryKey, options] as const,
+//       queryFn: ({ queryKey: [, options] }) => searchProduct(options),
+//     }),
+// }
