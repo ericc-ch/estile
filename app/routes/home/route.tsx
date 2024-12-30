@@ -9,8 +9,10 @@ import {
   Group,
   Loader,
   Box,
+  ScrollArea,
+  Button,
 } from "@mantine/core"
-import { PaperclipIcon, SendIcon } from "lucide-react"
+import { ArrowLeftIcon, PaperclipIcon, SendIcon } from "lucide-react"
 import { useState } from "react"
 
 import {
@@ -31,6 +33,8 @@ export default function Home() {
   const searchProduct = useSearchProduct()
 
   const [results, setResults] = useState<Results>([])
+
+  console.log({ results })
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -56,8 +60,6 @@ export default function Home() {
     const searchResponses = await Promise.all(searchPromises)
 
     setResults(searchResponses)
-
-    console.log({ recommendations, searchResponses })
   }
 
   const isProcessing = getRecommendations.isPending || searchProduct.isPending
@@ -79,15 +81,47 @@ export default function Home() {
 
   if (results.length > 0) {
     return (
-      <Stack>
+      <Stack gap={32} py={64}>
+        <Button
+          leftSection={
+            <ArrowLeftIcon style={{ width: rem(14), height: rem(14) }} />
+          }
+          style={{ alignSelf: "start" }}
+          variant="subtle"
+          onClick={() => {
+            setResults([])
+          }}
+        >
+          Back to search
+        </Button>
+
+        <Title>Your recommended outfits:</Title>
+
         {results.map(({ outfit, searchResults }) => (
-          <Stack>
-            <Text>{outfit.description}</Text>
-            <Group>
-              {searchResults.map((product) => (
-                <ResultCard {...product} />
-              ))}
-            </Group>
+          <Stack gap={12}>
+            <Stack gap={8}>
+              <Title order={2} style={{ textTransform: "capitalize" }}>
+                {outfit.category}
+              </Title>
+              <Text>{outfit.description}</Text>
+
+              <Stack gap={4}>
+                <Text c="dimmed" fw="bold" size="xs">
+                  Reasoning:
+                </Text>
+                <Text c="dimmed" size="xs">
+                  {outfit.reason}
+                </Text>
+              </Stack>
+            </Stack>
+
+            <ScrollArea offsetScrollbars scrollbarSize={4} type="auto">
+              <Group align="stretch" preventGrowOverflow={false} wrap="nowrap">
+                {searchResults.map((product) => (
+                  <ResultCard key={product.id} {...product} />
+                ))}
+              </Group>
+            </ScrollArea>
           </Stack>
         ))}
       </Stack>
