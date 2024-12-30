@@ -1,100 +1,32 @@
-# Welcome to React Router!
+_This is a submission for the [Bright Data Web Scraping Challenge](https://dev.to/challenges/brightdata): Most Creative Use of Web Data for AI Models_
 
-A modern, production-ready template for building full-stack React applications using React Router.
+## What I Built
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+Estile is an AI-powered fashion recommendation app designed to help users discover clothing articles tailored to their preferences. The app combines artificial intelligence and web scraping technologies to recommend outfits and automatically search for matching products on eBay in real time.
 
-## Features
+The app’s AI system suggests styles based on user preferences and trends. It then uses a custom fine-tuning process to optimize search keywords and ensure accurate product matching with items available on eBay.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## Demo
 
-## Getting Started
+[Demo Link Here](#)
 
-### Installation
+### Screenshots
 
-Install the dependencies:
+![Screenshot 1](#)
+![Screenshot 2](#)
 
-```bash
-npm install
-```
+## How I Used Bright Data
 
-### Development
+Bright Data was instrumental in building Estile by enabling real-time data scraping and fine-tuning the AI model. Here’s how I leveraged it:
 
-Start the development server with HMR:
+1. **Real-Time Scraping for Clothing Recommendations** - Using Bright Data’s Scraping Browser, I extracted data from dynamic and JavaScript-heavy websites to fetch the latest fashion items and trends. This ensured that recommendations were always fresh and relevant.
 
-```bash
-npm run dev
-```
+2. **eBay Data Collection and AI Fine-Tuning** - I utilized Bright Data’s Web Scraper API to collect and structure data from eBay. The data was used to train and fine-tune a language model (LLM) that matches AI-generated fashion descriptions with optimal product keywords. This allows the app to enhance search accuracy and deliver precise product suggestions to users.
 
-Your application will be available at `http://localhost:5173`.
+### Additional Prompt Qualifications
 
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Deployment
-
-### Docker Deployment
-
-This template includes three Dockerfiles optimized for different package managers:
-
-- `Dockerfile` - for npm
-- `Dockerfile.pnpm` - for pnpm
-- `Dockerfile.bun` - for bun
-
-To build and run using Docker:
-
-```bash
-# For npm
-docker build -t my-app .
-
-# For pnpm
-docker build -f Dockerfile.pnpm -t my-app .
-
-# For bun
-docker build -f Dockerfile.bun -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+- **Prompt 2: Build a Web Scraper API to Solve Business Problems** – Estile demonstrates a practical use of web scraping to tackle challenges in product discovery and recommendation systems.
 
 ---
 
-Built with ❤️ using React Router.
+A big thank you as well to the DEV.to team for hosting this exciting hackathon. Also thank you for considering my project for the Bright Data Web Scraping Challenge!

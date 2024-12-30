@@ -9,6 +9,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  type MetaFunction,
 } from "react-router"
 
 import type { Route } from "./+types/root"
@@ -18,6 +19,14 @@ export default function App() {
 }
 
 const queryClient = new QueryClient()
+
+export const meta: MetaFunction = () => {
+  return [
+    {
+      title: "Estile",
+    },
+  ]
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
