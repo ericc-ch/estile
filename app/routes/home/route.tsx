@@ -34,8 +34,6 @@ export default function Home() {
 
   const [results, setResults] = useState<Results>([])
 
-  console.log({ results })
-
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
